@@ -9,8 +9,25 @@ import Home from './components/pages/Home';
 import Header from './components/blocks/Header';
 import Footer from './components/blocks/Footer';
 import { ViewHistory } from './components/pages/ViewHistory';
+import { AdminDashboard } from './components/pages/admin/AdminDashboard';
+import { Department } from './components/pages/admin/Department';
 
 function App() {
+
+
+  const handleRender = () => {
+    if(isAuth && currentUser?.role === "admin"){
+      return <AdminDashboard />
+    }
+    else{
+      return <Login />
+    }
+  }
+
+
+
+
+
 
   const {isAuth, currentUser} = useContext(DContext)
 
@@ -22,8 +39,8 @@ function App() {
     <div className="container-fluid p-0">
       <Header/>
       <Routes>
-        <Route path="/" element={isAuth?<Home/>:<Login/>} />
-        <Route path="/dashboard" element={<Home/>} />
+        <Route path="/" element={handleRender()} />
+        <Route path='/admin/department' element={<Department />} />
         <Route path="/login" element={isAuth?<Home/>:<Login/>} />
         <Route path='/register' element={isAuth?<Home/>:<Register/>} />
         <Route path='/view-history' element={<ViewHistory/>} />
