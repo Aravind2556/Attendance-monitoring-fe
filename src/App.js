@@ -11,12 +11,14 @@ import { ViewHistory } from './components/pages/ViewHistory';
 import { AdminDashboard } from './components/pages/admin/AdminDashboard';
 import { Department } from './components/pages/admin/Department';
 import { Dashboard } from './components/pages/HOD/Dashboard';
-import StaffRegister from './components/pages/HOD/StaffRegister';
+
 import { Year } from './components/pages/admin/Year';
 import { ClassList } from './components/pages/admin/ClassList';
 import Timetable from './components/pages/HOD/TimeTable';
 
 
+import { HodList } from './components/pages/admin/HodList';
+import { StaffRegister } from './components/pages/StaffRegister';
 
 
 function App() {
@@ -49,6 +51,12 @@ function App() {
         <Route path="/login" element={isAuth ? <Home /> : <Login />} />
         <Route path='/register' element={isAuth ? <Home /> : <Register />} />
         <Route path='/view-history' element={<ViewHistory />} />
+        <Route path='/admin/hod' element={<HodList />} />
+        <Route path='/hodManage' element={<StaffRegister />}/>
+        
+        <Route path="/login" element={isAuth?<Home/>:<Login/>} />
+        <Route path='/register' element={isAuth?<Home/>:<Register/>} />
+        <Route path='/view-history' element={<ViewHistory/>} />
         <Route path='/test' element={<LoadingPage />} />
         <Route path='/hod' element={<Dashboard />} />
         <Route path='/hod/staff' element={<StaffRegister />} />
