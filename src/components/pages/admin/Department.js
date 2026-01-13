@@ -8,9 +8,7 @@ import { deleteDepartment } from "../../../service/deleteDepartment";
 export const Department = () => {
     const { BeURL, departments ,setDepartments}=useContext(DContext)
     const [name, setName] = useState("");
-
     const [editId, setEditId] = useState(null);
-
 
     // CREATE or UPDATE
     const handleSubmit = async () => {

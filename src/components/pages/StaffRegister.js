@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { DContext } from "../../context/Datacontext";
 
 export const StaffRegister = () => {
-    const { BeURL, departments } = useContext(DContext);
+    const { BeURL, departments, dropdownDepartments } = useContext(DContext);
 
     const [name, setName] = useState("");
     const [contact, setContact] = useState("");
@@ -179,8 +179,8 @@ export const StaffRegister = () => {
                                 className="mt-2 w-full rounded-xl border px-4 py-3 text-sm"
                             >
                                 <option value="">Select Department</option>
-                                {Array.isArray(departments) &&
-                                    departments.map((d) => (
+                                {Array.isArray(dropdownDepartments) &&
+                                    dropdownDepartments.map((d) => (
                                         <option key={d._id} value={d._id}>
                                             {d.name}
                                         </option>

@@ -28,6 +28,9 @@ function App() {
     if (isAuth && currentUser?.role === "admin") {
       return <AdminDashboard />
     }
+    else if (isAuth && currentUser?.role === "hod"){
+      return <Dashboard />
+    }
     else {
       return <Login />
     }

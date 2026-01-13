@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { fetchDepartment } from "../service/fetchDepartment";
 import { fetchYear } from "../service/fetchYear";
 import { fetchClass } from "../service/fetchClass";
+import { fetchDropDwonDepartments } from "../service/fetchDropDwonDepartments";
 
 export const DContext = createContext()
 
@@ -13,6 +14,7 @@ const DataContext = ({children}) => {
     const [departments, setDepartments] = useState([]);
     const [years, setYears] = useState([]);
     const [classes,setClasses]=useState([])
+    const [dropdownDepartments,setDropDownDepartments]=useState([])
 
     useEffect(()=>{
         fetch(`${BeURL}/checkauth`,{
@@ -93,12 +95,25 @@ const DataContext = ({children}) => {
                     };
                     loadClasses();
                 }, []);
+
+
+                useEffect(()=>{
+                    const loadDepartments = async () => {
+                        const data = await fetchDropDwonDepartments({ BeURL });
+                        if (data.success) {
+                            setDropDownDepartments(data.departments);
+                        } else {
+                            alert(data.message);
+                        }
+                    };
+                    loadDepartments();
+                })
             
 
 
 
 
-    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses }
+    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses, dropdownDepartments }
 
     return (
         <DContext.Provider value={data}>

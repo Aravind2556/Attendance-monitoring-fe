@@ -5,7 +5,7 @@ import { updateClassApi } from "../../../service/updateClassApi";
 import { deleteClass } from "../../../service/deleteClass";
 
 export const ClassList = () => {
-    const { BeURL, departments, years, setClasses, classes } =
+    const { BeURL, departments, years, setClasses, classes ,dropdownDepartments} =
         useContext(DContext);
 
     const [section, setSection] = useState("");
