@@ -14,6 +14,7 @@ import { Dashboard } from './components/pages/HOD/Dashboard';
 import StaffRegister from './components/pages/HOD/StaffRegister';
 import { Year } from './components/pages/admin/Year';
 import { ClassList } from './components/pages/admin/ClassList';
+import Timetable from './components/pages/HOD/TimeTable';
 
 
 
@@ -34,7 +35,7 @@ function App() {
     return <LoadingPage />
   }
 
-  
+
 
   return (
     <div className="container-fluid p-0">
@@ -44,12 +45,16 @@ function App() {
         <Route path='/admin/department' element={<Department />} />
         <Route path='/admin/year' element={<Year />} />
         <Route path='/admin/class' element={<ClassList />} />
-        
-        <Route path="/login" element={isAuth?<Home/>:<Login/>} />
-        <Route path='/register' element={isAuth?<Home/>:<Register/>} />
-        <Route path='/view-history' element={<ViewHistory/>} />
+
+        <Route path="/login" element={isAuth ? <Home /> : <Login />} />
+        <Route path='/register' element={isAuth ? <Home /> : <Register />} />
+        <Route path='/view-history' element={<ViewHistory />} />
         <Route path='/test' element={<LoadingPage />} />
         <Route path='/hod' element={<Dashboard />} />
+        <Route path='/hod/staff' element={<StaffRegister />} />
+        <Route path='/hod/timetable' element={<Timetable />} />
+
+
 
       </Routes>
       {/* <Footer/> */}

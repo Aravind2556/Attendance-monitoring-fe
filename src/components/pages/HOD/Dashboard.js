@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     FaBuilding,
     FaChalkboardTeacher,
     FaCalendarAlt,
     FaUserTie,
 } from "react-icons/fa";
+import { fetchStaff, fetchStudents } from "../../../service/fetchStaff";
+import { DContext } from "../../../context/Datacontext";
 
 export const Dashboard = () => {
+        const { currentUser, BeURL, years, classes } = useContext(DContext)
+    
     const cards = [
         {
             title: "Create Staff",
@@ -24,6 +28,146 @@ export const Dashboard = () => {
         },
 
     ];
+
+    const [timetable, setTimeTable] = useState([
+        {
+            "year": "2025",
+            "classes": [
+                {
+                    "class": "10A",
+                    "days": [
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "year": "2025",
+            "classes": [
+                {
+                    "class": "10A",
+                    "days": [
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "year": "2025",
+            "classes": [
+                {
+                    "class": "10A",
+                    "days": [
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "year": "2025",
+            "classes": [
+                {
+                    "class": "10A",
+                    "days": [
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "year": "2025",
+            "classes": [
+                {
+                    "class": "10A",
+                    "days": [
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        },
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        },
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        },
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" }
+                            ]
+                        },
+                        {
+                            "day": "Monday",
+                            "periods": [
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" },
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+                                { "startTime": "09:45", "endTime": "10:30", "subject": "Physics", "staff": "Kumar" },
+                                { "startTime": "09:00", "endTime": "09:45", "subject": "Maths", "staff": "Ravi" },
+
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+    ]
+    )
+    const [allStaff, setAllStaff] = useState([])
+    const [allStudents, setAllStudents] = useState([])
+    
+        useEffect(() => {
+            if (!BeURL) return
+    
+            const fetchAllDetails = async () => {
+                await fetchStaff({ BeURL, setAllStaff })
+                await fetchStudents({ BeURL, setAllStudents })
+
+            }
+    
+            fetchAllDetails()
+    
+        }, [BeURL])
+
+    const editTimetable = () => {
+
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
@@ -66,6 +210,77 @@ export const Dashboard = () => {
                     </a>
                 ))}
             </div>
+
+            {/* Scrollable Table */}
+            <div className="  mt-10 ">
+
+                {timetable.map((yearBlock) => (
+                    <div key={yearBlock.year} className="space-y-8 max-w-full">
+
+                        {/* Year */}
+                        <h2 className="text-2xl font-bold text-teal-700">
+                            Year : {yearBlock.year}
+                        </h2>
+
+                        {yearBlock.classes.map((cls) => (
+                            <div key={cls.class} className="bg-white rounded-2xl shadow-lg p-6 space-y-8">
+
+                                {/* Class */}
+                                <h3 className="text-xl font-semibold text-slate-800">
+                                    Section : {cls.class}
+                                </h3>
+                                <div className=" gap-3 lg:flex ">
+
+                                    {cls.days.map((day) => (
+                                        <div key={day.day} className="space-y-4 ">
+                                            {/* Day */}
+                                            <h4 className="text-lg font-semibold text-primary-600 border-b pb-2">
+                                                {day.day}
+                                            </h4>
+
+                                            {/* Table */}
+                                            <table className="w-full border rounded-lg overflow-hidden">
+                                                <thead className="bg-teal-100 text-teal-900">
+                                                    <tr>
+                                                        <th className="p-3 text-left">Time</th>
+                                                        <th className="p-3 text-left">Subject</th>
+                                                        <th className="p-3 text-left">Staff</th>
+                                                        <th className="p-3 text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    {day.periods.map((p, i) => (
+                                                        <tr key={i} className="border-t hover:bg-teal-50">
+                                                            <td className="p-3">
+                                                                {p.startTime} – {p.endTime}
+                                                            </td>
+                                                            <td className="p-3 font-medium">{p.subject}</td>
+                                                            <td className="p-3">{p.staff}</td>
+                                                            <td className="p-3 text-center">
+                                                                <button
+                                                                    onClick={() => editTimetable(p, day.day, cls.class, yearBlock.year)}
+                                                                    className="px-4 font-medium py-1.5 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700"
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+
+            {/* sTAFF dETAILS: */}
+
         </div>
     );
 };

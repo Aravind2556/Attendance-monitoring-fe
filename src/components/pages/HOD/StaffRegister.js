@@ -6,7 +6,8 @@ import { DContext } from '../../../context/Datacontext';
 
 const StaffRegister = () => {
 
-    const { currentUser, BeURL } = useContext(DContext)
+    const { currentUser, BeURL, years, classes } = useContext(DContext)
+    console.log("CurrentUsers", years, classes)
 
     const [name, setName] = useState('');
     const [contact, setContact] = useState('');
@@ -18,8 +19,8 @@ const StaffRegister = () => {
     const [empId, setEmpId] = useState('')
 
     const [isClassIncharge, setIsClassIncharge] = useState(false)
-    const [classes, setClasses] = useState('');
-    const [year, setYear] = useState('')
+    const [classess, setclassess] = useState('');
+    const [year, setyear] = useState('')
 
     const [comparePassword, setComparePassword] = useState(true)
 
@@ -42,7 +43,7 @@ const StaffRegister = () => {
                     tempUser.gender = gender.toLocaleLowerCase().trim()
                 }
 
-                if (classes) tempUser.classes = classes
+                if (classess) tempUser.classes = classess
                 if (year) tempUser.year = year
                 if (currentUser?.department) {
                     tempUser.department = currentUser?.department
@@ -68,6 +69,10 @@ const StaffRegister = () => {
                             setConfirmPassword('')
                             setAge('')
                             setGender('Male')
+                            setIsClassIncharge(false)
+                            setEmpId('')
+                            setclassess('')
+                            setyear('')
 
                         } else {
                             alert(data.message)
@@ -112,7 +117,7 @@ const StaffRegister = () => {
                             <input
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
                                 placeholder="John Alex"
                             />
                         </div>
@@ -122,7 +127,7 @@ const StaffRegister = () => {
                             <input
                                 value={contact}
                                 onChange={(e) => setContact(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
                                 placeholder="+91 9876543210"
                             />
                         </div>
@@ -137,7 +142,7 @@ const StaffRegister = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 type="email"
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
                                 placeholder="name@example.com"
                             />
                         </div>
@@ -182,7 +187,7 @@ const StaffRegister = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 type="password"
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
                             />
                         </div>
 
@@ -193,7 +198,7 @@ const StaffRegister = () => {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 type="password"
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
                             />
                         </div>
                     </div>
@@ -211,7 +216,7 @@ const StaffRegister = () => {
                             <input
                                 value={empId}
                                 onChange={(e) => setEmpId(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
                                 placeholder="VXC-001"
                             />
                         </div>
@@ -247,42 +252,39 @@ const StaffRegister = () => {
                             <div>
                                 <label className="text-sm font-medium text-slate-700">Class</label>
                                 <select
-                                    value={classes}
-                                    onChange={(e) => setClasses(e.target.value)}
+                                    value={classess}
+                                    onChange={(e) => setclassess(e.target.value)}
                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm shadow-sm
-      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+       focus:ring-2 focus:ring-primary-200"
                                 >
                                     <option value="">Select Class</option>
-                                    <option value="6A">6 A</option>
-                                    <option value="6B">6 B</option>
-                                    <option value="7A">7 A</option>
-                                    <option value="7B">7 B</option>
-                                    <option value="8A">8 A</option>
-                                    <option value="8B">8 B</option>
-                                    <option value="9A">9 A</option>
-                                    <option value="9B">9 B</option>
-                                    <option value="10A">10 A</option>
-                                    <option value="10B">10 B</option>
-                                    <option value="11A">11 A</option>
-                                    <option value="11B">11 B</option>
-                                    <option value="12A">12 A</option>
-                                    <option value="12B">12 B</option>
+                                    {
+                                        classes.map(cl => (
+                                            <option>{cl.section}- {cl.number}</option>
+                                        ))
+                                    }
+
                                 </select>
                             </div>
 
-                            {/* Year */}
+                            {/* year */}
                             <div>
-                                <label className="text-sm font-medium text-slate-700">Academic Year</label>
+                                <label className="text-sm font-medium text-slate-700">Year</label>
                                 <select
                                     value={year}
-                                    onChange={(e) => setYear(e.target.value)}
+                                    onChange={(e) => setyear(e.target.value)}
                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm shadow-sm
-      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+       focus:ring-2 focus:ring-primary-200"
                                 >
-                                    <option value="">Select Year</option>
-                                    <option value="2024">2024 – 2025</option>
+                                    <option value="">Select year</option>
+                                    {
+                                        years.map(y => (
+                                            <option value={y._id}>{y.year}</option>
+                                        ))
+                                    }
+                                    {/* <option value="2024">2024 – 2025</option>
                                     <option value="2025">2025 – 2026</option>
-                                    <option value="2026">2026 – 2027</option>
+                                    <option value="2026">2026 – 2027</option> */}
                                 </select>
                             </div>
 
@@ -295,8 +297,7 @@ const StaffRegister = () => {
                     {/* Button */}
                     <div className='flex justify-end items-center gap-5'>
                         <button
-                            onClick={() =>
-                            {
+                            onClick={() => {
                                 setName('');
                                 setEmail('');
                                 setContact('');
@@ -304,6 +305,10 @@ const StaffRegister = () => {
                                 setConfirmPassword('');
                                 setAge('');
                                 setGender('Male');
+                                setIsClassIncharge(false);
+                                setEmpId('');
+                                setclassess('');
+                                setyear('');
                             }
                             }
                             type="button"
