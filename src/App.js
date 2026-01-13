@@ -7,15 +7,19 @@ import { DContext } from './context/Datacontext';
 import LoadingPage from './components/pages/Loading';
 import Home from './components/pages/Home';
 import Header from './components/blocks/Header';
-import Footer from './components/blocks/Footer';
 import { ViewHistory } from './components/pages/ViewHistory';
 import { AdminDashboard } from './components/pages/admin/AdminDashboard';
 import { Department } from './components/pages/admin/Department';
 import { Dashboard } from './components/pages/HOD/Dashboard';
 import StaffRegister from './components/pages/HOD/StaffRegister';
+import { Year } from './components/pages/admin/Year';
+import { ClassList } from './components/pages/admin/ClassList';
+
+
+
 
 function App() {
-
+  const { isAuth, currentUser } = useContext(DContext)
 
   const handleRender = () => {
     if (isAuth && currentUser?.role === "admin") {
@@ -26,16 +30,11 @@ function App() {
     }
   }
 
-
-
-
-
-
-  const { isAuth, currentUser } = useContext(DContext)
-
   if (isAuth === null || !currentUser) {
     return <LoadingPage />
   }
+
+  
 
   return (
     <div className="container-fluid p-0">
@@ -43,12 +42,15 @@ function App() {
       <Routes>
         <Route path="/" element={handleRender()} />
         <Route path='/admin/department' element={<Department />} />
-        <Route path="/login" element={isAuth ? <Home /> : <Login />} />
-        <Route path='/register' element={isAuth ? <Home /> : <Register />} />
-        <Route path='/view-history' element={<ViewHistory />} />
+        <Route path='/admin/year' element={<Year />} />
+        <Route path='/admin/class' element={<ClassList />} />
+        
+        <Route path="/login" element={isAuth?<Home/>:<Login/>} />
+        <Route path='/register' element={isAuth?<Home/>:<Register/>} />
+        <Route path='/view-history' element={<ViewHistory/>} />
         <Route path='/test' element={<LoadingPage />} />
         <Route path='/hod' element={<Dashboard />} />
-        <Route path='/hod/staff' element={ <StaffRegister />} />
+
       </Routes>
       {/* <Footer/> */}
     </div>

@@ -16,18 +16,18 @@ export const AdminDashboard = () => {
             link: "/admin/department",
         },
         {
-            title: "Create Class",
-            desc: "Create classes & sections",
-            icon: <FaChalkboardTeacher size={28} />,
-            color: "from-green-500 to-emerald-600",
-            link: "/admin/class",
-        },
-        {
             title: "Create Year",
             desc: "Manage academic years",
             icon: <FaCalendarAlt size={28} />,
             color: "from-purple-500 to-pink-600",
             link: "/admin/year",
+        },
+        {
+            title: "Create Class",
+            desc: "Create classes & sections",
+            icon: <FaChalkboardTeacher size={28} />,
+            color: "from-green-500 to-emerald-600",
+            link: "/admin/class",
         },
         {
             title: "Create HOD",

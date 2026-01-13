@@ -1,4 +1,7 @@
 import { createContext, useEffect, useState } from "react";
+import { fetchDepartment } from "../service/fetchDepartment";
+import { fetchYear } from "../service/fetchYear";
+import { fetchClass } from "../service/fetchClass";
 
 export const DContext = createContext()
 
@@ -7,6 +10,9 @@ const DataContext = ({children}) => {
     const BeURL = process.env.REACT_APP_BeURL
     const [isAuth, setIsAuth] = useState(null)
     const [currentUser, setCurrentUser] = useState(null)
+    const [departments, setDepartments] = useState([]);
+    const [years, setYears] = useState([]);
+    const [classes,setClasses]=useState([])
 
     useEffect(()=>{
         fetch(`${BeURL}/checkauth`,{
@@ -50,7 +56,49 @@ const DataContext = ({children}) => {
         })
     }
 
-    const data = {isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout}
+        useEffect(() => {
+            const loadDepartments = async () => {
+                const data = await fetchDepartment({ BeURL });
+    
+                if (data.success) {
+                    setDepartments(data.departments);
+                } else {
+                    alert(data.message);
+                }
+            };
+            loadDepartments();
+        }, [])
+
+
+            useEffect(() => {
+                const loadyears = async () => {
+                    const data = await fetchYear({ BeURL });
+                    if (data.success) {
+                        setYears(data.years);
+                    } else {
+                        alert(data.message);
+                    }
+                };
+                loadyears();
+            }, []);
+
+                useEffect(() => {
+                    const loadClasses = async () => {
+                        const data = await fetchClass({ BeURL });
+                        if (data.success) {
+                            setClasses(data.classes);
+                        } else {
+                            alert(data.message);
+                        }
+                    };
+                    loadClasses();
+                }, []);
+            
+
+
+
+
+    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses }
 
     return (
         <DContext.Provider value={data}>
