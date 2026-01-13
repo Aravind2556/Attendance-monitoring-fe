@@ -11,11 +11,11 @@ import { ViewHistory } from './components/pages/ViewHistory';
 import { AdminDashboard } from './components/pages/admin/AdminDashboard';
 import { Department } from './components/pages/admin/Department';
 import { Dashboard } from './components/pages/HOD/Dashboard';
-import StaffRegister from './components/pages/HOD/StaffRegister';
+
 import { Year } from './components/pages/admin/Year';
 import { ClassList } from './components/pages/admin/ClassList';
-
-
+import { HodList } from './components/pages/admin/HodList';
+import { StaffRegister } from './components/pages/StaffRegister';
 
 
 function App() {
@@ -44,6 +44,8 @@ function App() {
         <Route path='/admin/department' element={<Department />} />
         <Route path='/admin/year' element={<Year />} />
         <Route path='/admin/class' element={<ClassList />} />
+        <Route path='/admin/hod' element={<HodList />} />
+        <Route path='/hodManage' element={<StaffRegister />}/>
         
         <Route path="/login" element={isAuth?<Home/>:<Login/>} />
         <Route path='/register' element={isAuth?<Home/>:<Register/>} />
