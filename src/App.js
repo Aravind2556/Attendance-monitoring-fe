@@ -7,13 +7,17 @@ import { DContext } from './context/Datacontext';
 import LoadingPage from './components/pages/Loading';
 import Home from './components/pages/Home';
 import Header from './components/blocks/Header';
-import Footer from './components/blocks/Footer';
 import { ViewHistory } from './components/pages/ViewHistory';
 import { AdminDashboard } from './components/pages/admin/AdminDashboard';
 import { Department } from './components/pages/admin/Department';
+import { Year } from './components/pages/admin/Year';
+import { ClassList } from './components/pages/admin/ClassList';
+
+
+
 
 function App() {
-
+  const { isAuth, currentUser } = useContext(DContext)
 
   const handleRender = () => {
     if(isAuth && currentUser?.role === "admin"){
@@ -25,12 +29,6 @@ function App() {
   }
 
 
-
-
-
-
-  const {isAuth, currentUser} = useContext(DContext)
-
   if(isAuth===null || !currentUser){
     return <LoadingPage/>
   }
@@ -41,6 +39,9 @@ function App() {
       <Routes>
         <Route path="/" element={handleRender()} />
         <Route path='/admin/department' element={<Department />} />
+        <Route path='/admin/year' element={<Year />} />
+        <Route path='/admin/class' element={<ClassList />} />
+        
         <Route path="/login" element={isAuth?<Home/>:<Login/>} />
         <Route path='/register' element={isAuth?<Home/>:<Register/>} />
         <Route path='/view-history' element={<ViewHistory/>} />
