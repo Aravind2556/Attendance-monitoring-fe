@@ -19,6 +19,7 @@ import Timetable from './components/pages/HOD/TimeTable';
 
 import { HodList } from './components/pages/admin/HodList';
 import { StaffRegister } from './components/pages/StaffRegister';
+import StaffRegisters from './components/pages/HOD/StaffRegister';
 
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
   const handleRender = () => {
     if (isAuth && currentUser?.role === "admin") {
       return <AdminDashboard />
+    }
+    else if (isAuth && currentUser?.role === "hod") {
+      return <Dashboard />
     }
     else {
       return <Login />
@@ -52,17 +56,11 @@ function App() {
         <Route path='/register' element={isAuth ? <Home /> : <Register />} />
         <Route path='/view-history' element={<ViewHistory />} />
         <Route path='/admin/hod' element={<HodList />} />
-        <Route path='/hodManage' element={<StaffRegister />}/>
-        
-        <Route path="/login" element={isAuth?<Home/>:<Login/>} />
-        <Route path='/register' element={isAuth?<Home/>:<Register/>} />
-        <Route path='/view-history' element={<ViewHistory/>} />
+        <Route path='/hodManage' element={<StaffRegister />} />
         <Route path='/test' element={<LoadingPage />} />
         <Route path='/hod' element={<Dashboard />} />
-        <Route path='/hod/staff' element={<StaffRegister />} />
-        <Route path='/hod/timetable' element={<Timetable />} />
-
-
+        <Route path='/hod/staff' element={isAuth ? <StaffRegisters /> : <Login />} />
+        <Route path='/hod/timetable' element={isAuth ? <Timetable /> : <Login />} />
 
       </Routes>
       {/* <Footer/> */}

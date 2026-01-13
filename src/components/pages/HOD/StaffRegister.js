@@ -4,7 +4,7 @@ import { DContext } from '../../../context/Datacontext';
 
 // import posterImg from '../../assets/Login.jpg'
 
-const StaffRegister = () => {
+const StaffRegisters = () => {
 
     const { currentUser, BeURL, years, classes } = useContext(DContext)
     console.log("CurrentUsers", years, classes)
@@ -61,7 +61,7 @@ const StaffRegister = () => {
                     .then(data => {
                         if (data.success) {
                             // Signup successful
-
+                            alert(data.message)
                             setName('')
                             setEmail('')
                             setContact('')
@@ -337,4 +337,4 @@ const StaffRegister = () => {
 
 }
 
-export default StaffRegister
+export default StaffRegisters
