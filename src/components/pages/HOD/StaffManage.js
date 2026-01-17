@@ -1,0 +1,87 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DContext } from '../../../context/Datacontext';
+import { fetchStaffs } from '../../../service/fetchStaffs';
+
+export const StaffManage = () => {
+    const { BeURL } = useContext(DContext);
+    const [allStaff, setAllStaff] = useState([]);
+    const [loadingStaffs, setLoadingStaffs] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!BeURL) return;
+        fetchStaffs({ BeURL, setAllStaff, setLoadingStaffs });
+    }, [BeURL]);
+
+    // ✅ Correct loading check
+    if (loadingStaffs) {
+        return <div className="p-6">Loading staffs...</div>;
+    }
+
+    return (
+        <div className="min-h-screen bg-gray-100 p-6 space-y-5">
+
+            {/* Header */}
+            <div>
+                <h1 className="text-3xl font-bold text-gray-800">Staff Management</h1>
+                <p className="text-gray-500">Manage staff & tutors under your department</p>
+            </div>
+
+            {/* Action Bar */}
+            <div className="flex justify-end">
+                <button
+                    onClick={() => navigate("/hod/createstaff")}
+                    className="px-6 py-3 rounded-lg text-white font-semibold
+          bg-gradient-to-r from-indigo-500 to-blue-600 hover:opacity-90"
+                >
+                    Create Staff
+                </button>
+            </div>
+
+            {/* Table */}
+            <div className="bg-white rounded-xl shadow-md p-6">
+                <h2 className="text-lg font-semibold mb-4">Staff List</h2>
+
+                <table className="w-full border-collapse">
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="px-4 py-2 text-left">#</th>
+                            <th className="px-4 py-2 text-left">Name</th>
+                            <th className="px-4 py-2 text-left">Role</th>
+                            <th className="px-4 py-2 text-left">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {allStaff.length === 0 ? (
+                            <tr>
+                                <td colSpan={4} className="px-4 py-4 text-center text-gray-400">
+                                    No staff found
+                                </td>
+                            </tr>
+                        ) : (
+                            allStaff.map((staff, index) => (
+                                <tr key={staff._id} className="border-b">
+                                    <td className="px-4 py-2">{index + 1}</td>
+                                    <td className="px-4 py-2">
+                                        {staff.fullname || staff.name}
+                                    </td>
+                                    <td className="px-4 py-2 capitalize">
+                                        {staff.role}
+                                    </td>
+                                    <td className="px-4 py-2">
+                                        <button className="text-blue-600 hover:underline">
+                                            View
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    );
+};

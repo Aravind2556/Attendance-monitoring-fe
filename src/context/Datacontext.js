@@ -3,10 +3,11 @@ import { fetchDepartment } from "../service/fetchDepartment";
 import { fetchYear } from "../service/fetchYear";
 import { fetchClass } from "../service/fetchClass";
 import { fetchDropDwonDepartments } from "../service/fetchDropDwonDepartments";
+import { fetchCurrentHod } from "../service/fetchCurrentHod";
 
 export const DContext = createContext()
 
-const DataContext = ({children}) => {
+const DataContext = ({ children }) => {
 
     const BeURL = process.env.REACT_APP_BeURL
     const [isAuth, setIsAuth] = useState(null)
@@ -15,74 +16,89 @@ const DataContext = ({children}) => {
     const [years, setYears] = useState([]);
     const [classes,setClasses]=useState([])
     const [dropdownDepartments,setDropDownDepartments]=useState([])
+    const [currentHod,setCurrentHod]=useState(null)
 
-    useEffect(()=>{
-        fetch(`${BeURL}/checkauth`,{
+
+    useEffect(() => {
+        fetch(`${BeURL}/checkauth`, {
             credentials: "include"
         })
-        .then(res=>res.json())
-        .then(data=>{
-            if(data.success){
-                setIsAuth(true)
-                setCurrentUser(data.user)
-            }
-            else{
-                setIsAuth(false)
-                setCurrentUser({})
-            }
-        })
-        .catch(err=>{
-            setIsAuth(null)
-            setCurrentUser(null)
-            console.log("Erron in fetching User:",err)
-            alert("Trouble in connecting to the Server, please try again later.")
-        })
-    },[])
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setIsAuth(true)
+                    setCurrentUser(data.user)
+                }
+                else {
+                    setIsAuth(false)
+                    setCurrentUser({})
+                }
+            })
+            .catch(err => {
+                setIsAuth(null)
+                setCurrentUser(null)
+                console.log("Erron in fetching User:", err)
+                alert("Trouble in connecting to the Server, please try again later.")
+            })
+    }, [])
 
 
     const handleLogout = () => {
-        fetch(`${BeURL}/logout`,{
+        fetch(`${BeURL}/logout`, {
             credentials: "include"
         })
-        .then(res=>res.json())
-        .then(data=>{
-            alert(data.message)
-            if(data.success){
-                setIsAuth(false)
-                setCurrentUser({})
-            }
-        })
-        .catch(err=>{
-            console.log("Erron in Logout:",err)
-            alert("Trouble in connecting to the Server, please try again later.")
-        })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message)
+                if (data.success) {
+                    setIsAuth(false)
+                    setCurrentUser({})
+                    window.location.href = '/'
+                }
+            })
+            .catch(err => {
+                console.log("Erron in Logout:", err)
+                alert("Trouble in connecting to the Server, please try again later.")
+            })
     }
 
-        useEffect(() => {
-            const loadDepartments = async () => {
-                const data = await fetchDepartment({ BeURL });
-    
-                if (data.success) {
-                    setDepartments(data.departments);
-                } else {
-                    alert(data.message);
-                }
-            };
-            loadDepartments();
-        }, [])
+    useEffect(() => {
+        const loadDepartments = async () => {
+            const data = await fetchDepartment({ BeURL });
+
+            if (data.success) {
+                setDepartments(data.departments);
+            } else {
+                alert(data.message);
+            }
+        };
+        loadDepartments();
+    }, [])
 
 
-            useEffect(() => {
-                const loadyears = async () => {
-                    const data = await fetchYear({ BeURL });
-                    if (data.success) {
-                        setYears(data.years);
-                    } else {
-                        alert(data.message);
-                    }
-                };
-                loadyears();
-            }, []);
+    useEffect(() => {
+        const loadyears = async () => {
+            const data = await fetchYear({ BeURL });
+            if (data.success) {
+                setYears(data.years);
+            } else {
+                alert(data.message);
+            }
+        };
+        loadyears();
+    }, []);
+
+    useEffect(() => {
+        const loadClasses = async () => {
+            const data = await fetchClass({ BeURL });
+            if (data.success) {
+                setClasses(data.classes);
+            } else {
+                alert(data.message);
+            }
+        };
+        loadClasses();
+    }, []);
 
                 useEffect(() => {
                     const loadClasses = async () => {
@@ -108,12 +124,25 @@ const DataContext = ({children}) => {
                     };
                     loadDepartments();
                 })
-            
+
+                    useEffect(() => {
+                        if(currentUser?.role === "hod"){
+                            const loadCurrentHod = async () => {
+                                const data = await fetchCurrentHod({ BeURL });
+
+                                if (data.success) {
+                                    setCurrentHod(data.hod);
+                                } else {
+                                    alert(data.message);
+                                }
+                            };
+
+                            loadCurrentHod();
+                        }
+                    }, [BeURL,currentUser]);
 
 
-
-
-    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses, dropdownDepartments }
+    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses, dropdownDepartments ,currentHod ,setCurrentHod}
 
     return (
         <DContext.Provider value={data}>

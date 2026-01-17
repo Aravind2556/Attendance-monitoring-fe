@@ -1,232 +1,360 @@
-import React, { useEffect } from 'react'
-import { useState, useContext } from 'react';
+// import React, { useEffect, useState, useContext } from 'react';
+// import { DContext } from '../../../context/Datacontext';
+// import { fetchStaff } from '../../../service/fetchStaff';
+// import { createTimetable } from '../../../service/createTimetable';
+
+// const Timetable = () => {
+
+//     const { BeURL, years, classes, currentHod } = useContext(DContext);
+
+//     const [day, setDay] = useState('');
+//     const [periodNo, setPeriodNo] = useState('');
+//     const [startTime, setStartTime] = useState('');
+//     const [endTime, setEndTime] = useState('');
+//     const [subject, setSubject] = useState('');
+//     const [staff, setStaff] = useState('');
+//     const [year, setYear] = useState('');
+
+//     const [assignedClasses, setAssignedClasses] = useState([]);
+//     const [allStaff, setAllStaff] = useState([]);
+
+//     useEffect(() => {
+//         if (BeURL) fetchStaff({ BeURL, setAllStaff });
+//     }, [BeURL]);
+
+//     const hodClasses =
+//         Array.isArray(classes) && Array.isArray(currentHod?.class)
+//             ? classes.filter(c => currentHod.class.includes(c._id))
+//             : [];
+
+//     const getClassLabel = (c) => `${c.section} - ${c.number}`;
+
+//     const handleRegister = async () => {
+//         const tempTimetable = {
+//             day,
+//             periodNo,
+//             startTime,
+//             endTime,
+//             year,
+//             classes: assignedClasses,
+//             subject,
+//             staff
+//         };
+
+//         const res = await createTimetable({ BeURL, tempTimetable });
+//         alert(res.message);
+
+//         if (res.success) {
+//             setDay('');
+//             setPeriodNo('');
+//             setStartTime('');
+//             setEndTime('');
+//             setSubject('');
+//             setStaff('');
+//             setYear('');
+//             setAssignedClasses([]);
+//         }
+//     };
+
+//     if (!currentHod || !Array.isArray(classes)) {
+//         return <div className="p-10">Loading...</div>;
+//     }
+
+//     return (
+//         <section className="min-h-screen flex items-center justify-center bg-slate-100 p-6">
+//             <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl p-8 space-y-6">
+
+//                 <h2 className="text-2xl font-bold text-primary-600">Create Timetable</h2>
+
+//                 {/* Day & Period */}
+//                 <div className="grid md:grid-cols-2 gap-5">
+//                     <input
+//                         placeholder="Day (Monday)"
+//                         value={day}
+//                         onChange={e => setDay(e.target.value)}
+//                         className="input-style"
+//                     />
+//                     <input
+//                         placeholder="Period No"
+//                         value={periodNo}
+//                         onChange={e => setPeriodNo(e.target.value)}
+//                         className="input-style"
+//                     />
+//                 </div>
+
+//                 {/* Time */}
+//                 <div className="grid md:grid-cols-2 gap-5">
+//                     <input type="time" value={startTime} onChange={e => setStartTime(e.target.value)} className="input-style" />
+//                     <input type="time" value={endTime} onChange={e => setEndTime(e.target.value)} className="input-style" />
+//                 </div>
+
+//                 {/* Class */}
+//                 <div>
+//                     <label className="font-medium">Class</label>
+//                     <div className="mt-2 border rounded-xl p-4 space-y-2 max-h-32 overflow-y-auto">
+//                         {hodClasses.map(c => (
+//                             <label key={c._id} className="flex items-center gap-3">
+//                                 <input
+//                                     type="checkbox"
+//                                     checked={assignedClasses.includes(c._id)}
+//                                     onChange={e =>
+//                                         e.target.checked
+//                                             ? setAssignedClasses([...assignedClasses, c._id])
+//                                             : setAssignedClasses(assignedClasses.filter(id => id !== c._id))
+//                                     }
+//                                 />
+//                                 {getClassLabel(c)}
+//                             </label>
+//                         ))}
+//                     </div>
+//                 </div>
+
+//                 {/* Year & Subject */}
+//                 <div className="grid md:grid-cols-2 gap-5">
+//                     <select value={year} onChange={e => setYear(e.target.value)} className="input-style">
+//                         <option value="">Select Year</option>
+//                         {years.map(y => (
+//                             <option key={y._id} value={y._id}>{y.year}</option>
+//                         ))}
+//                     </select>
+
+//                     <input
+//                         placeholder="Subject"
+//                         value={subject}
+//                         onChange={e => setSubject(e.target.value)}
+//                         className="input-style"
+//                     />
+//                 </div>
+
+//                 {/* Staff */}
+//                 <select value={staff} onChange={e => setStaff(e.target.value)} className="input-style">
+//                     <option value="">Select Staff</option>
+//                     {allStaff.map(s => (
+//                         <option key={s._id} value={s._id}>
+//                             {s.fullname || s.name}
+//                         </option>
+//                     ))}
+//                 </select>
+
+//                 {/* Button */}
+//                 <div className="flex justify-end">
+//                     <button
+//                         onClick={handleRegister}
+//                         className="px-8 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition"
+//                     >
+//                         Create Schedule
+//                     </button>
+//                 </div>
+
+//             </div>
+//         </section>
+//     );
+// };
+
+// export default Timetable;
+
+
+
+
+
+import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { DContext } from '../../../context/Datacontext';
 import { fetchStaff } from '../../../service/fetchStaff';
 import { createTimetable } from '../../../service/createTimetable';
 
-// import posterImg from '../../assets/Login.jpg'
-
 const Timetable = () => {
 
-    const { currentUser, BeURL, years, classes } = useContext(DContext)
-    console.log("CurrentUsers", years, classes)
+    const { BeURL, years, classes, currentHod } = useContext(DContext);
 
     const [day, setDay] = useState('');
-    const [periodNo, setperiodNo] = useState('');
-    const [startTime, setstartTime] = useState('');
+    const [periodNo, setPeriodNo] = useState('');
+    const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [subject, setSubject] = useState('');
-    const [staff, setStaff] = useState('')
-    const [classess, setclassess] = useState('');
-    const [year, setyear] = useState('')
-    const [allStaff, setAllStaff] = useState([])
+    const [staff, setStaff] = useState('');
+    const [year, setYear] = useState('');
+    const [assignedClasses, setAssignedClasses] = useState([]);
+    const [allStaff, setAllStaff] = useState([]);
 
     useEffect(() => {
-        if (!BeURL) return
+        if (BeURL) fetchStaff({ BeURL, setAllStaff });
+    }, [BeURL]);
 
-        const fetchAllStaff = async () => {
-            await fetchStaff({ BeURL, setAllStaff })
-        }
+    /**
+     * 🔹 Step 1: HOD assigned classes
+     */
+    const hodClasses = useMemo(() => {
+        if (!Array.isArray(classes) || !Array.isArray(currentHod?.class)) return [];
+        return classes.filter(c =>
+            currentHod.class.includes(c._id)
+        );
+    }, [classes, currentHod]);
 
-        fetchAllStaff()
+    /**
+     * 🔹 Step 2: Year based classes (FINAL FIX)
+     */
+    const yearClasses = useMemo(() => {
+        if (!year) return [];
+        return hodClasses.filter(c => c.year === year);
+    }, [hodClasses, year]);
 
-    }, [BeURL])
+    const getClassLabel = (c) => `${c.section} - ${c.number}`;
 
     const handleRegister = async () => {
 
-        const tempTimetable = {
-            day , periodNo, startTime, endTime, year, classes :classess, subject, staff
+        if (!day || !periodNo || !startTime || !endTime || !year || !subject || !staff || assignedClasses.length === 0) {
+            alert("All fields are required");
+            return;
         }
-        
-        await createTimetable({ BeURL, tempTimetable })
+
+        const tempTimetable = {
+            day,
+            periodNo,
+            startTime,
+            endTime,
+            year,
+            classes: assignedClasses,
+            subject,
+            staff
+        };
+
+        const res = await createTimetable({ BeURL, tempTimetable });
+        alert(res.message);
+
+        if (res.success) {
+            setDay('');
+            setPeriodNo('');
+            setStartTime('');
+            setEndTime('');
+            setSubject('');
+            setStaff('');
+            setYear('');
+            setAssignedClasses([]);
+        }
+    };
+
+    if (!currentHod || !Array.isArray(classes)) {
+        return <div className="p-10">Loading...</div>;
     }
 
-
     return (
-        <section className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 flex items-center justify-center px-4 py-10">
-            <div className="w-full max-w-7xl rounded-3xl bg-white shadow-2xl ring-1 ring-slate-200 overflow-hidden">
+        <section className="min-h-screen flex items-center justify-center bg-slate-100 p-6">
+            <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl p-8 space-y-6">
 
-                {/* Header */}
-                <div className="bg-gradient-to-r from-primary-600 to-primary-500 p-8 text-white">
-                    <h2 className="text-3xl font-bold">Create Timetable</h2>
-                    <p className="mt-2 text-sm text-primary-100">
-                        Timetable for access the Smart Attendance System
-                    </p>
+                <h2 className="text-2xl font-bold text-primary-600">
+                    Create Timetable
+                </h2>
+
+                {/* Day & Period */}
+                <div className="grid md:grid-cols-2 gap-5">
+                    <input
+                        placeholder="Day (Monday)"
+                        value={day}
+                        onChange={e => setDay(e.target.value)}
+                        className="input-style"
+                    />
+                    <input
+                        placeholder="Period No"
+                        value={periodNo}
+                        onChange={e => setPeriodNo(e.target.value)}
+                        className="input-style"
+                    />
                 </div>
 
-                {/* Form */}
-                <form className="p-8 space-y-6">
+                {/* Time */}
+                <div className="grid md:grid-cols-2 gap-5">
+                    <input type="time" value={startTime}
+                        onChange={e => setStartTime(e.target.value)}
+                        className="input-style" />
+                    <input type="time" value={endTime}
+                        onChange={e => setEndTime(e.target.value)}
+                        className="input-style" />
+                </div>
 
-                    {/* Day and Period Number */}
+                {/* Year */}
+                <select
+                    value={year}
+                    onChange={e => {
+                        setYear(e.target.value);
+                        setAssignedClasses([]); // 🔥 reset class on year change
+                    }}
+                    className="input-style"
+                >
+                    <option value="">Select Year</option>
+                    {years.map(y => (
+                        <option key={y._id} value={y._id}>
+                            {y.year}
+                        </option>
+                    ))}
+                </select>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Day : </label>
-                            <input
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
-                                placeholder="Sunday"
-                            />
+                {/* Class (YEAR BASED) */}
+                <div>
+                    <label className="font-medium">Class</label>
+
+                    {year === '' ? (
+                        <p className="text-sm text-slate-500 mt-2">
+                            Please select year to view classes
+                        </p>
+                    ) : (
+                        <div className="mt-2 border rounded-xl p-4 space-y-2 max-h-32 overflow-y-auto">
+                            {yearClasses.map(c => (
+                                <label key={c._id} className="flex items-center gap-3">
+                                    <input
+                                        type="checkbox"
+                                        checked={assignedClasses.includes(c._id)}
+                                        onChange={e =>
+                                            e.target.checked
+                                                ? setAssignedClasses([...assignedClasses, c._id])
+                                                : setAssignedClasses(
+                                                    assignedClasses.filter(id => id !== c._id)
+                                                )
+                                        }
+                                    />
+                                    {getClassLabel(c)}
+                                </label>
+                            ))}
+
+                            {yearClasses.length === 0 && (
+                                <p className="text-sm text-red-500">
+                                    No classes available for this year
+                                </p>
+                            )}
                         </div>
+                    )}
+                </div>
 
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Period Number :</label>
-                            <input
-                                value={periodNo}
-                                onChange={(e) => setperiodNo(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
-                                placeholder="+91 9876543210"
-                            />
-                        </div>
-                    </div>
+                {/* Subject */}
+                <input
+                    placeholder="Subject"
+                    value={subject}
+                    onChange={e => setSubject(e.target.value)}
+                    className="input-style"
+                />
 
+                {/* Staff */}
+                <select value={staff} onChange={e => setStaff(e.target.value)} className="input-style">
+                    <option value="">Select Staff</option>
+                    {allStaff.map(s => (
+                        <option key={s._id} value={s._id}>
+                            {s.fullname || s.name}
+                        </option>
+                    ))}
+                </select>
 
-                    {/* Start and End Date */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Start Time</label>
-                            <input
-                                value={startTime}
-                                onChange={(e) => setstartTime(e.target.value)}
-                                type="time"
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
-                                placeholder="12:00"
-                            />
-                        </div>
+                {/* Button */}
+                <div className="flex justify-end">
+                    <button
+                        onClick={handleRegister}
+                        className="px-8 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700"
+                    >
+                        Create Schedule
+                    </button>
+                </div>
 
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">End Time</label>
-                            <input
-                                value={endTime}
-                                onChange={(e) => setEndTime(e.target.value)}
-                                type="time"
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
-                                placeholder="12:00"
-                            />
-                        </div>
-
-
-                    </div>
-
-                    {/* Class and Year */}
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                        {/* Class */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Class</label>
-                            <select
-                                value={classess}
-                                onChange={(e) => setclassess(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm shadow-sm
-       focus:ring-2 focus:ring-primary-200"
-                            >
-                                <option value="">Select Class</option>
-                                {
-                                    classes.map(cl => (
-                                        <option>{cl.section}- {cl.number}</option>
-                                    ))
-                                }
-
-                            </select>
-                        </div>
-
-                        {/* year */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Year</label>
-                            <select
-                                value={year}
-                                onChange={(e) => setyear(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm shadow-sm
-       focus:ring-2 focus:ring-primary-200"
-                            >
-                                <option value="">Select year</option>
-                                {
-                                    years.map(y => (
-                                        <option value={y._id}>{y.year}</option>
-                                    ))
-                                }
-                                {/* <option value="2024">2024 – 2025</option>
-                                    <option value="2025">2025 – 2026</option>
-                                    <option value="2026">2026 – 2027</option> */}
-                            </select>
-                        </div>
-
-                    </div>
-
-                    {/* Passwords */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Subject</label>
-                            <input
-                                placeholder='Javascript'
-                                value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
-                                type="text"
-                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-primary-200"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">Staff</label>
-                            <select
-                                value={staff}
-                                onChange={(e) => setStaff(e.target.value)}
-                                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm shadow-sm
-       focus:ring-2 focus:ring-primary-200"
-                            >
-                                <option value="">Select Staff</option>
-                                {
-                                    allStaff.length > 0 && allStaff.map(y => (
-                                        <option value={y._id}>{y.name}</option>
-                                    ))
-                                }
-                                {/* <option value="2024">2024 – 2025</option>
-                                    <option value="2025">2025 – 2026</option>
-                                    <option value="2026">2026 – 2027</option> */}
-                            </select>
-                        </div>
-                    </div>
-
-
-
-                    {/* Button */}
-                    <div className='flex justify-end items-center gap-5'>
-                        <button
-                            onClick={() => {
-                                setDay('');
-                                setstartTime('');
-                                setperiodNo('');
-                                setEndTime('');
-                                setSubject('')
-                                setStaff('')
-                                setclassess('');
-                                setyear('');
-                            }
-                            }
-                            type="button"
-                            className="min-w-36 rounded-xl bg-white py-3 text-primary-600 border-primary-600 border-2 font-semibold text-sm shadow-lg hover:bg-primary-700 hover:shadow-xl transition"
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            onClick={handleRegister}
-                            type="button"
-                            className="w-36 rounded-xl bg-primary-600 py-3 text-white font-semibold text-sm shadow-lg hover:bg-primary-700 hover:shadow-xl transition"
-                        >
-                            Create Schedule
-                        </button>
-                    </div>
-
-
-
-                </form>
             </div>
         </section>
     );
+};
 
-}
-
-export default Timetable
+export default Timetable;

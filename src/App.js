@@ -19,6 +19,11 @@ import Timetable from './components/pages/HOD/TimeTable';
 
 import { HodList } from './components/pages/admin/HodList';
 import { StaffRegister } from './components/pages/StaffRegister';
+import { TutorDashboard } from './components/pages/ClassInchange.js/TutorDashboard';
+import CreateStudent from './components/pages/ClassInchange.js/CreateStudent';
+import ClassStaffRegister from './components/pages/HOD/ClassStaffRegister';
+import { StaffManage } from './components/pages/HOD/StaffManage';
+import { ManageTimeTable } from './components/pages/HOD/ManageTimeTable';
 
 
 function App() {
@@ -31,7 +36,10 @@ function App() {
     else if (isAuth && currentUser?.role === "hod"){
       return <Dashboard />
     }
-    else {
+    else if (isAuth && currentUser?.role === "tutor") {
+      return <TutorDashboard />
+    }
+    else{
       return <Login />
     }
   }
@@ -50,22 +58,20 @@ function App() {
         <Route path='/admin/department' element={<Department />} />
         <Route path='/admin/year' element={<Year />} />
         <Route path='/admin/class' element={<ClassList />} />
+        <Route path='/inchange/createstudent' element={isAuth ? <CreateStudent /> : <Login />} />
 
         <Route path="/login" element={isAuth ? <Home /> : <Login />} />
         <Route path='/register' element={isAuth ? <Home /> : <Register />} />
         <Route path='/view-history' element={<ViewHistory />} />
         <Route path='/admin/hod' element={<HodList />} />
-        <Route path='/hodManage' element={<StaffRegister />}/>
-        
-        <Route path="/login" element={isAuth?<Home/>:<Login/>} />
-        <Route path='/register' element={isAuth?<Home/>:<Register/>} />
-        <Route path='/view-history' element={<ViewHistory/>} />
+        <Route path='/hodManage' element={<StaffRegister />} />
         <Route path='/test' element={<LoadingPage />} />
         <Route path='/hod' element={<Dashboard />} />
-        <Route path='/hod/staff' element={<StaffRegister />} />
-        <Route path='/hod/timetable' element={<Timetable />} />
-
-
+        <Route path='/hod/staff' element={isAuth ? <StaffManage /> : <Login />} />
+        <Route path='/hod/createstaff' element={isAuth ? <ClassStaffRegister /> : <Login />} />
+        <Route path='/hod/timetable' element={isAuth ? <ManageTimeTable /> : <Login />} />
+        <Route path='/hod/createTimeTable' element={isAuth ? <Timetable /> : <Login />} />
+        
 
       </Routes>
       {/* <Footer/> */}

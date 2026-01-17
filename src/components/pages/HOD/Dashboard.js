@@ -212,12 +212,12 @@ export const Dashboard = () => {
             </div>
 
             {/* Scrollable Table */}
-            <div className="  mt-10 ">
+            {/* <div className="  mt-10 ">
 
                 {timetable.map((yearBlock) => (
                     <div key={yearBlock.year} className="space-y-8 max-w-full">
 
-                        {/* Year */}
+             
                         <h2 className="text-2xl font-bold text-teal-700">
                             Year : {yearBlock.year}
                         </h2>
@@ -225,7 +225,7 @@ export const Dashboard = () => {
                         {yearBlock.classes.map((cls) => (
                             <div key={cls.class} className="bg-white rounded-2xl shadow-lg p-6 space-y-8">
 
-                                {/* Class */}
+                       
                                 <h3 className="text-xl font-semibold text-slate-800">
                                     Section : {cls.class}
                                 </h3>
@@ -233,12 +233,12 @@ export const Dashboard = () => {
 
                                     {cls.days.map((day) => (
                                         <div key={day.day} className="space-y-4 ">
-                                            {/* Day */}
+                                     
                                             <h4 className="text-lg font-semibold text-primary-600 border-b pb-2">
                                                 {day.day}
                                             </h4>
 
-                                            {/* Table */}
+                               
                                             <table className="w-full border rounded-lg overflow-hidden">
                                                 <thead className="bg-teal-100 text-teal-900">
                                                     <tr>
@@ -277,7 +277,7 @@ export const Dashboard = () => {
                         ))}
                     </div>
                 ))}
-            </div>
+            </div> */}
 
             {/* sTAFF dETAILS: */}
 
