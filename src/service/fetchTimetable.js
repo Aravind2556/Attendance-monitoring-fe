@@ -2,8 +2,8 @@ export const fetchTimetable = async ({ BeURL, setLoading, setTimetableCount }) =
     try {
         setLoading(true);
 
-        // example: fetch all timetables (or change API if needed)
-        const res = await fetch(`${BeURL}/fetchtimetables?year=1`, {
+        // example: fetch all timetables (or change API if needed)    /fetchtimetables?year=1
+        const res = await fetch(`${BeURL}/fetch-timetable`, {
             method: "GET",
             credentials: "include",
         });
