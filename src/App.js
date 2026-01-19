@@ -61,7 +61,7 @@ function App() {
         <Route path='/inchange/createstudent' element={isAuth ? <CreateStudent /> : <Login />} />
 
         <Route path="/login" element={isAuth ? <Home /> : <Login />} />
-        <Route path='/register' element={isAuth ? <Home /> : <Register />} />
+        {/* <Route path='/register' element={isAuth ? <Home /> : <Register />} /> */}
         <Route path='/view-history' element={<ViewHistory />} />
         <Route path='/admin/hod' element={<HodList />} />
         <Route path='/hodManage' element={<StaffRegister />} />

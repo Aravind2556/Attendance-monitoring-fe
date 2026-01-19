@@ -17,11 +17,10 @@ const Timetable = () => {
     const [assignedClasses, setAssignedClasses] = useState([]);
     const [allStaff, setAllStaff] = useState([]);
 
-    // useEffect(() => {
-    //     fetchStaff({ BeURL, setAllStaff });
-    // }, []);
-
-    console.log("Staff", allStaff)
+    useEffect(() => {
+        if(!allStaff || !BeURL) return
+        fetchStaff({ BeURL, setAllStaff });
+    }, [allStaff, BeURL]);
 
     /**
      * 🔹 Step 1: HOD assigned classes
@@ -85,7 +84,7 @@ const Timetable = () => {
             <div className="w-full max-w-5xl rounded-3xl bg-white shadow-2xl ring-1 ring-slate-200 overflow-hidden">
 
                 {/* Header */}
-                <div className="bg-gradient-to-r from-primary-700 to-primary-500 p-8 text-white">
+                <div className="bg-gradient-to-r from-primary-500 to-primary-500 p-8 text-white">
                     <h2 className="text-3xl font-bold">Create Timetable</h2>
                     <p className="mt-2 text-sm text-primary-100">
                         Define class schedule for attendance monitoring
@@ -104,7 +103,7 @@ const Timetable = () => {
                                 onChange={e => setDay(e.target.value)}
                                 placeholder="Monday"
                                 className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
-      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                             focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
                             />
                         </div>
 
@@ -115,7 +114,7 @@ const Timetable = () => {
                                 onChange={e => setPeriodNo(e.target.value)}
                                 placeholder="1"
                                 className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
-      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                               focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
                             />
                         </div>
                     </div>
@@ -129,7 +128,7 @@ const Timetable = () => {
                                 value={startTime}
                                 onChange={e => setStartTime(e.target.value)}
                                 className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
-      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                                        focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
                             />
                         </div>
 
