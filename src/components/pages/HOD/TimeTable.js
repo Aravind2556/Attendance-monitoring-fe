@@ -1,162 +1,3 @@
-// import React, { useEffect, useState, useContext } from 'react';
-// import { DContext } from '../../../context/Datacontext';
-// import { fetchStaff } from '../../../service/fetchStaff';
-// import { createTimetable } from '../../../service/createTimetable';
-
-// const Timetable = () => {
-
-//     const { BeURL, years, classes, currentHod } = useContext(DContext);
-
-//     const [day, setDay] = useState('');
-//     const [periodNo, setPeriodNo] = useState('');
-//     const [startTime, setStartTime] = useState('');
-//     const [endTime, setEndTime] = useState('');
-//     const [subject, setSubject] = useState('');
-//     const [staff, setStaff] = useState('');
-//     const [year, setYear] = useState('');
-
-//     const [assignedClasses, setAssignedClasses] = useState([]);
-//     const [allStaff, setAllStaff] = useState([]);
-
-//     useEffect(() => {
-//         if (BeURL) fetchStaff({ BeURL, setAllStaff });
-//     }, [BeURL]);
-
-//     const hodClasses =
-//         Array.isArray(classes) && Array.isArray(currentHod?.class)
-//             ? classes.filter(c => currentHod.class.includes(c._id))
-//             : [];
-
-//     const getClassLabel = (c) => `${c.section} - ${c.number}`;
-
-//     const handleRegister = async () => {
-//         const tempTimetable = {
-//             day,
-//             periodNo,
-//             startTime,
-//             endTime,
-//             year,
-//             classes: assignedClasses,
-//             subject,
-//             staff
-//         };
-
-//         const res = await createTimetable({ BeURL, tempTimetable });
-//         alert(res.message);
-
-//         if (res.success) {
-//             setDay('');
-//             setPeriodNo('');
-//             setStartTime('');
-//             setEndTime('');
-//             setSubject('');
-//             setStaff('');
-//             setYear('');
-//             setAssignedClasses([]);
-//         }
-//     };
-
-//     if (!currentHod || !Array.isArray(classes)) {
-//         return <div className="p-10">Loading...</div>;
-//     }
-
-//     return (
-//         <section className="min-h-screen flex items-center justify-center bg-slate-100 p-6">
-//             <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl p-8 space-y-6">
-
-//                 <h2 className="text-2xl font-bold text-primary-600">Create Timetable</h2>
-
-//                 {/* Day & Period */}
-//                 <div className="grid md:grid-cols-2 gap-5">
-//                     <input
-//                         placeholder="Day (Monday)"
-//                         value={day}
-//                         onChange={e => setDay(e.target.value)}
-//                         className="input-style"
-//                     />
-//                     <input
-//                         placeholder="Period No"
-//                         value={periodNo}
-//                         onChange={e => setPeriodNo(e.target.value)}
-//                         className="input-style"
-//                     />
-//                 </div>
-
-//                 {/* Time */}
-//                 <div className="grid md:grid-cols-2 gap-5">
-//                     <input type="time" value={startTime} onChange={e => setStartTime(e.target.value)} className="input-style" />
-//                     <input type="time" value={endTime} onChange={e => setEndTime(e.target.value)} className="input-style" />
-//                 </div>
-
-//                 {/* Class */}
-//                 <div>
-//                     <label className="font-medium">Class</label>
-//                     <div className="mt-2 border rounded-xl p-4 space-y-2 max-h-32 overflow-y-auto">
-//                         {hodClasses.map(c => (
-//                             <label key={c._id} className="flex items-center gap-3">
-//                                 <input
-//                                     type="checkbox"
-//                                     checked={assignedClasses.includes(c._id)}
-//                                     onChange={e =>
-//                                         e.target.checked
-//                                             ? setAssignedClasses([...assignedClasses, c._id])
-//                                             : setAssignedClasses(assignedClasses.filter(id => id !== c._id))
-//                                     }
-//                                 />
-//                                 {getClassLabel(c)}
-//                             </label>
-//                         ))}
-//                     </div>
-//                 </div>
-
-//                 {/* Year & Subject */}
-//                 <div className="grid md:grid-cols-2 gap-5">
-//                     <select value={year} onChange={e => setYear(e.target.value)} className="input-style">
-//                         <option value="">Select Year</option>
-//                         {years.map(y => (
-//                             <option key={y._id} value={y._id}>{y.year}</option>
-//                         ))}
-//                     </select>
-
-//                     <input
-//                         placeholder="Subject"
-//                         value={subject}
-//                         onChange={e => setSubject(e.target.value)}
-//                         className="input-style"
-//                     />
-//                 </div>
-
-//                 {/* Staff */}
-//                 <select value={staff} onChange={e => setStaff(e.target.value)} className="input-style">
-//                     <option value="">Select Staff</option>
-//                     {allStaff.map(s => (
-//                         <option key={s._id} value={s._id}>
-//                             {s.fullname || s.name}
-//                         </option>
-//                     ))}
-//                 </select>
-
-//                 {/* Button */}
-//                 <div className="flex justify-end">
-//                     <button
-//                         onClick={handleRegister}
-//                         className="px-8 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition"
-//                     >
-//                         Create Schedule
-//                     </button>
-//                 </div>
-
-//             </div>
-//         </section>
-//     );
-// };
-
-// export default Timetable;
-
-
-
-
-
 import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { DContext } from '../../../context/Datacontext';
 import { fetchStaff } from '../../../service/fetchStaff';
@@ -176,9 +17,11 @@ const Timetable = () => {
     const [assignedClasses, setAssignedClasses] = useState([]);
     const [allStaff, setAllStaff] = useState([]);
 
-    useEffect(() => {
-        if (BeURL) fetchStaff({ BeURL, setAllStaff });
-    }, [BeURL]);
+    // useEffect(() => {
+    //     fetchStaff({ BeURL, setAllStaff });
+    // }, []);
+
+    console.log("Staff", allStaff)
 
     /**
      * 🔹 Step 1: HOD assigned classes
@@ -188,7 +31,7 @@ const Timetable = () => {
         return classes.filter(c =>
             currentHod.class.includes(c._id)
         );
-    }, [classes, currentHod]);
+    }, [classes]);
 
     /**
      * 🔹 Step 2: Year based classes (FINAL FIX)
@@ -238,123 +81,148 @@ const Timetable = () => {
     }
 
     return (
-        <section className="min-h-screen flex items-center justify-center bg-slate-100 p-6">
-            <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl p-8 space-y-6">
+        <section className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 flex items-center justify-center px-4 py-10">
+            <div className="w-full max-w-5xl rounded-3xl bg-white shadow-2xl ring-1 ring-slate-200 overflow-hidden">
 
-                <h2 className="text-2xl font-bold text-primary-600">
-                    Create Timetable
-                </h2>
-
-                {/* Day & Period */}
-                <div className="grid md:grid-cols-2 gap-5">
-                    <input
-                        placeholder="Day (Monday)"
-                        value={day}
-                        onChange={e => setDay(e.target.value)}
-                        className="input-style"
-                    />
-                    <input
-                        placeholder="Period No"
-                        value={periodNo}
-                        onChange={e => setPeriodNo(e.target.value)}
-                        className="input-style"
-                    />
+                {/* Header */}
+                <div className="bg-gradient-to-r from-primary-700 to-primary-500 p-8 text-white">
+                    <h2 className="text-3xl font-bold">Create Timetable</h2>
+                    <p className="mt-2 text-sm text-primary-100">
+                        Define class schedule for attendance monitoring
+                    </p>
                 </div>
 
-                {/* Time */}
-                <div className="grid md:grid-cols-2 gap-5">
-                    <input type="time" value={startTime}
-                        onChange={e => setStartTime(e.target.value)}
-                        className="input-style" />
-                    <input type="time" value={endTime}
-                        onChange={e => setEndTime(e.target.value)}
-                        className="input-style" />
-                </div>
+                {/* Form */}
+                <div className="p-8 space-y-8">
 
-                {/* Year */}
-                <select
-                    value={year}
-                    onChange={e => {
-                        setYear(e.target.value);
-                        setAssignedClasses([]); // 🔥 reset class on year change
-                    }}
-                    className="input-style"
-                >
-                    <option value="">Select Year</option>
-                    {years.map(y => (
-                        <option key={y._id} value={y._id}>
-                            {y.year}
-                        </option>
-                    ))}
-                </select>
-
-                {/* Class (YEAR BASED) */}
-                <div>
-                    <label className="font-medium">Class</label>
-
-                    {year === '' ? (
-                        <p className="text-sm text-slate-500 mt-2">
-                            Please select year to view classes
-                        </p>
-                    ) : (
-                        <div className="mt-2 border rounded-xl p-4 space-y-2 max-h-32 overflow-y-auto">
-                            {yearClasses.map(c => (
-                                <label key={c._id} className="flex items-center gap-3">
-                                    <input
-                                        type="checkbox"
-                                        checked={assignedClasses.includes(c._id)}
-                                        onChange={e =>
-                                            e.target.checked
-                                                ? setAssignedClasses([...assignedClasses, c._id])
-                                                : setAssignedClasses(
-                                                    assignedClasses.filter(id => id !== c._id)
-                                                )
-                                        }
-                                    />
-                                    {getClassLabel(c)}
-                                </label>
-                            ))}
-
-                            {yearClasses.length === 0 && (
-                                <p className="text-sm text-red-500">
-                                    No classes available for this year
-                                </p>
-                            )}
+                    {/* Row 1: Day & Period */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Day</label>
+                            <input
+                                value={day}
+                                onChange={e => setDay(e.target.value)}
+                                placeholder="Monday"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            />
                         </div>
-                    )}
+
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Period No</label>
+                            <input
+                                value={periodNo}
+                                onChange={e => setPeriodNo(e.target.value)}
+                                placeholder="1"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Row 2: Start Time & End Time */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Start Time</label>
+                            <input
+                                type="time"
+                                value={startTime}
+                                onChange={e => setStartTime(e.target.value)}
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">End Time</label>
+                            <input
+                                type="time"
+                                value={endTime}
+                                onChange={e => setEndTime(e.target.value)}
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Row 3: Year & Class */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Academic Year</label>
+                            <select
+                                // value={year}
+                                onChange={e => {
+                                    setYear(e.target.value);
+                                    setAssignedClasses([]);
+                                }}
+                                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            >
+                                <option value="">Select Year</option>
+                                {years.map(y => (
+                                    <option key={y._id} value={y._id}>
+                                        {y.year}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Class</label>
+                            <select
+                                // value={assignedClasses[0] || ""}
+                                onChange={e => setAssignedClasses([e.target.value])}
+                                disabled={!year}
+                                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm
+      disabled:bg-slate-100 disabled:text-slate-400
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            >
+                                <option value="">Select Class</option>
+                                {yearClasses.map(c => (
+                                    <option key={c._id} value={c._id}>
+                                        {getClassLabel(c)}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Row 4: Subject & Staff */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Subject</label>
+                            <input
+                                value={subject}
+                                onChange={e => setSubject(e.target.value)}
+                                placeholder="Mathematics"
+                                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="text-sm font-medium text-slate-700">Staff</label>
+                            <select
+                                // value={staff}
+                                onChange={e => setStaff(e.target.value)}
+                                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm
+      focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
+                            >
+                                <option value="">Select Staff</option>
+                                {allStaff.map(s => (
+                                    <option key={s._id} value={s._id}>
+                                        {s.fullname || s.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
-
-                {/* Subject */}
-                <input
-                    placeholder="Subject"
-                    value={subject}
-                    onChange={e => setSubject(e.target.value)}
-                    className="input-style"
-                />
-
-                {/* Staff */}
-                <select value={staff} onChange={e => setStaff(e.target.value)} className="input-style">
-                    <option value="">Select Staff</option>
-                    {allStaff.map(s => (
-                        <option key={s._id} value={s._id}>
-                            {s.fullname || s.name}
-                        </option>
-                    ))}
-                </select>
-
-                {/* Button */}
-                <div className="flex justify-end">
-                    <button
-                        onClick={handleRegister}
-                        className="px-8 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700"
-                    >
-                        Create Schedule
-                    </button>
-                </div>
-
             </div>
         </section>
     );
+
 };
 
 export default Timetable;

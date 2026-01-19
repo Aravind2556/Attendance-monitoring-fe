@@ -2,11 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DContext } from '../../../context/Datacontext';
 import { fetchStaffs } from '../../../service/fetchStaffs';
+import { fetchStaffId } from '../../../service/fetchStaff';
 
 export const StaffManage = () => {
     const { BeURL } = useContext(DContext);
     const [allStaff, setAllStaff] = useState([]);
+    const [staff, setStaff] = useState([])
     const [loadingStaffs, setLoadingStaffs] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedStaff, setSelectedStaff] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,6 +21,17 @@ export const StaffManage = () => {
     // ✅ Correct loading check
     if (loadingStaffs) {
         return <div className="p-6">Loading staffs...</div>;
+    }
+
+    const handleStaff = async (id) => {
+        const fetchedStaff = await fetchStaffId({ BeURL, setStaff, id });
+        setSelectedStaff(fetchedStaff || staff); // Assuming fetchStaffId returns the staff object or sets it in state
+        setShowPopup(true);
+    }
+
+    const closePopup = () => {
+        setShowPopup(false);
+        setSelectedStaff(null);
     }
 
     return (
@@ -71,7 +86,7 @@ export const StaffManage = () => {
                                         {staff.role}
                                     </td>
                                     <td className="px-4 py-2">
-                                        <button className="text-blue-600 hover:underline">
+                                        <button className="text-blue-600 hover:underline" onClick={() => handleStaff(staff._id)}>
                                             View
                                         </button>
                                     </td>
@@ -80,6 +95,34 @@ export const StaffManage = () => {
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Popup Modal */}
+            {showPopup && selectedStaff && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+                        <h3 className="text-xl font-bold mb-4">Staff Details</h3>
+                        <div className="space-y-2">
+                            <p><strong>Name:</strong> {selectedStaff[0].staff?.fullname || selectedStaff.name}</p>
+                            <p><strong>Email:</strong> {selectedStaff[0].staff?.email}</p>
+                            <p><strong>Role:</strong> {selectedStaff[0].staff?.role}</p>
+                            <p><strong>Department:</strong> {selectedStaff[0].department?.name}</p>
+                            <p><strong>Contact:</strong> {selectedStaff[0].staff?.contact}</p>
+                        </div>
+                        <div className="mt-4 flex justify-end">
+                            <button
+                                onClick={closePopup}
+                                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div>
+
             </div>
 
         </div>
