@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useMemo } from 'react';
 import { DContext } from '../../../context/Datacontext';
 
@@ -15,28 +14,17 @@ const CreateStudent = () => {
 
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedClass, setSelectedClass] = useState('');
-
     const [comparePassword, setComparePassword] = useState(true);
 
-    /** 🔹 Department based classes */
     const departmentClasses = useMemo(() => {
         if (!classes || !currentUser?.department) return [];
-        return classes.filter(
-            c => c.department === currentUser.department
-        );
+        return classes.filter(c => c.department === currentUser.department);
     }, [classes, currentUser]);
 
-    /** 🔹 Year based classes */
     const yearClasses = useMemo(() => {
         if (!selectedYear) return [];
-        return departmentClasses.filter(
-            c => c.year === selectedYear
-        );
+        return departmentClasses.filter(c => c.year === selectedYear);
     }, [departmentClasses, selectedYear]);
-
-    const getClassLabel = (cls) => {
-        return `${cls.section} - ${cls.number}`;
-    };
 
     const handleRegister = () => {
         setComparePassword(password === confirmPassword);
@@ -45,7 +33,6 @@ const CreateStudent = () => {
             alert("All fields are required!");
             return;
         }
-
         if (password !== confirmPassword) {
             alert("Passwords do not match!");
             return;
@@ -89,48 +76,70 @@ const CreateStudent = () => {
 
     return (
         <section className="min-h-screen flex items-center justify-center bg-slate-100 p-6">
-            <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl p-8 space-y-6">
+            <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl p-8 space-y-6">
 
-                <h2 className="text-2xl font-bold text-primary-600">
+                <h2 className="text-2xl font-bold text-blue-600">
                     Create Student Account
                 </h2>
 
                 {/* Name & Contact */}
                 <div className="grid md:grid-cols-2 gap-5">
-                    <input placeholder="Full Name" value={name}
-                        onChange={e => setName(e.target.value)} className="input" />
-                    <input placeholder="Contact" value={contact}
-                        onChange={e => setContact(e.target.value)} className="input" />
+                    <input
+                        placeholder="Full Name"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                    <input
+                        placeholder="Contact"
+                        value={contact}
+                        onChange={e => setContact(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
                 </div>
 
                 {/* Email & Gender */}
                 <div className="grid md:grid-cols-2 gap-5">
-                    <input placeholder="Email" value={email}
-                        onChange={e => setEmail(e.target.value)} className="input" />
+                    <input
+                        placeholder="Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
 
                     <div className="flex gap-3">
                         {["Male", "Female", "Other"].map(g => (
-                            <label key={g}
-                                className={`px-4 py-2 rounded-full border cursor-pointer
-                                ${gender === g ? "bg-primary-600 text-white" : ""}`}>
-                                <input type="radio" value={g}
-                                    checked={gender === g}
-                                    onChange={e => setGender(e.target.value)}
-                                    className="hidden" />
+                            <button
+                                key={g}
+                                type="button"
+                                onClick={() => setGender(g)}
+                                className={`px-4 py-2 rounded-full border transition
+                                ${gender === g
+                                        ? "bg-blue-600 text-white border-blue-600"
+                                        : "border-slate-300 text-slate-700 hover:border-blue-400"}`}
+                            >
                                 {g}
-                            </label>
+                            </button>
                         ))}
                     </div>
                 </div>
 
                 {/* Password */}
                 <div className="grid md:grid-cols-2 gap-5">
-                    <input type="password" placeholder="Password"
-                        value={password} onChange={e => setPassword(e.target.value)}
-                        className="input" />
-                    <input type="password" placeholder="Confirm Password"
-                        value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
-                        className="input" />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={e => setConfirmPassword(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
                 </div>
 
                 {!comparePassword && (
@@ -146,15 +155,14 @@ const CreateStudent = () => {
                             setSelectedYear(e.target.value);
                             setSelectedClass('');
                         }}
-                        className="input mt-2"
+                        className="w-full mt-2 rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
                     >
                         <option value="">Select Year</option>
-                        {years
-                            .map(y => (
-                                <option key={y._id} value={y._id}>
-                                    {y.year} - Year
-                                </option>
-                            ))}
+                        {years.map(y => (
+                            <option key={y._id} value={y._id}>
+                                {y.year} - Year
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -165,12 +173,12 @@ const CreateStudent = () => {
                         value={selectedClass}
                         onChange={e => setSelectedClass(e.target.value)}
                         disabled={!selectedYear}
-                        className="input mt-2"
+                        className="w-full mt-2 rounded-lg border border-slate-300 px-4 py-3 disabled:bg-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
                     >
                         <option value="">Select Class</option>
                         {yearClasses.map(c => (
                             <option key={c._id} value={c._id}>
-                                {getClassLabel(c)}
+                                {c.section} - {c.number}
                             </option>
                         ))}
                     </select>
@@ -178,8 +186,16 @@ const CreateStudent = () => {
 
                 {/* Buttons */}
                 <div className="flex justify-end gap-4">
-                    <button onClick={handleClear} className="btn-outline">Cancel</button>
-                    <button onClick={handleRegister} className="btn-primary">
+                    <button
+                        onClick={handleClear}
+                        className="px-6 py-3 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleRegister}
+                        className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                    >
                         Create Account
                     </button>
                 </div>
