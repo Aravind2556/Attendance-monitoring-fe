@@ -8,6 +8,7 @@ const CreateStudent = () => {
     const [name, setName] = useState('');
     const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
+    const [parentEmail,setParentEmail]=useState("")
     const [gender, setGender] = useState('Male');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -29,7 +30,7 @@ const CreateStudent = () => {
     const handleRegister = () => {
         setComparePassword(password === confirmPassword);
 
-        if (!name || !email || !contact || !password || !selectedYear || !selectedClass) {
+        if (!name || !email || !contact || !password || !selectedYear || !selectedClass || !parentEmail) {
             alert("All fields are required!");
             return;
         }
@@ -43,6 +44,7 @@ const CreateStudent = () => {
             email,
             contact,
             password,
+            parentEmail,
             gender: gender.toLowerCase(),
             department: currentUser.department,
             year: selectedYear,
@@ -147,6 +149,7 @@ const CreateStudent = () => {
                 )}
 
                 {/* Year */}
+                <div className="grid md:grid-cols-2 gap-5" >
                 <div>
                     <label className="font-medium">Year</label>
                     <select
@@ -182,6 +185,18 @@ const CreateStudent = () => {
                             </option>
                         ))}
                     </select>
+                </div>
+                </div>
+
+                <div>
+                    <label className="font-medium">Parent Email</label>
+                    <input
+                        placeholder="Parent Email"
+                        value={parentEmail}
+                        onChange={e => setParentEmail(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+
                 </div>
 
                 {/* Buttons */}
