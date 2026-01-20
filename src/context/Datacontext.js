@@ -15,9 +15,9 @@ const DataContext = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [departments, setDepartments] = useState([]);
     const [years, setYears] = useState([]);
-    const [classes,setClasses]=useState([])
-    const [dropdownDepartments,setDropDownDepartments]=useState([])
-    const [currentHod,setCurrentHod]=useState(null)
+    const [classes, setClasses] = useState([])
+    const [dropdownDepartments, setDropDownDepartments] = useState([])
+    const [currentHod, setCurrentHod] = useState(null)
     const [users, setUsers] = useState([])
 
 
@@ -102,53 +102,51 @@ const DataContext = ({ children }) => {
         loadClasses();
     }, []);
 
-                useEffect(() => {
-                    const loadClasses = async () => {
-                        const data = await fetchClass({ BeURL });
-                        if (data.success) {
-                            setClasses(data.classes);
-                        } else {
-                            alert(data.message);
-                        }
-                    };
-                    loadClasses();
-                }, []);
+    useEffect(() => {
+        const loadClasses = async () => {
+            const data = await fetchClass({ BeURL });
+            if (data.success) {
+                setClasses(data.classes);
+            } else {
+                alert(data.message);
+            }
+        };
+        loadClasses();
+    }, []);
 
 
-                useEffect(()=>{
-                    const loadDepartments = async () => {
-                        const data = await fetchDropDwonDepartments({ BeURL });
-                        if (data.success) {
-                            setDropDownDepartments(data.departments);
-                        } else {
-                            alert(data.message);
-                        }
-                    };
-                    loadDepartments();
-                },[BeURL])
+    useEffect(() => {
+        const loadDepartments = async () => {
+            const data = await fetchDropDwonDepartments({ BeURL });
+            if (data.success) {
+                setDropDownDepartments(data.departments);
+            } else {
+                alert(data.message);
+            }
+        };
+        loadDepartments();
+    }, [BeURL])
+    useEffect(() => {
+        if (currentUser?.role === "hod") {
+            const loadCurrentHod = async () => {
+                const data = await fetchCurrentHod({ BeURL });
 
-                    useEffect(() => {
-                        if(currentUser?.role === "hod"){
-                            const loadCurrentHod = async () => {
-                                const data = await fetchCurrentHod({ BeURL });
-
-                                if (data.success) {
-                                    setCurrentHod(data.hod);
-                                } else {
-                                    alert(data.message);
-                                }
-                            };
-
-                            loadCurrentHod();
-                        }
-                    }, [BeURL,currentUser]);
+                if (data.success) {
+                    setCurrentHod(data.hod);
+                } else {
+                    alert(data.message);
+                }
+            };
+            loadCurrentHod();
+        }
+    }, [BeURL, currentUser]);
 
     useEffect(() => {
         const loadUsers = async () => {
             const data = await fetchUsers({ BeURL })
 
             if (data.success) {
-                setUsers(data.users) 
+                setUsers(data.users)
             } else {
                 alert(data.message)
             }

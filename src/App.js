@@ -41,7 +41,7 @@ function App() {
       return <TutorDashboard />
     }
     else if (isAuth && currentUser?.role === "student"){
-      return 
+      return
     }
     else{
       return <Login />
