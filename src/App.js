@@ -40,7 +40,7 @@ function App() {
     else if (isAuth && currentUser?.role === "tutor" || currentUser?.role === "staff") {
       return <TutorDashboard />
     }
-    else if (isAuth && currentUser?.role === "student") {
+    else if (isAuth && currentUser?.role === "student"){
       return
     }
     else {
