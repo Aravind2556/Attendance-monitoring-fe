@@ -7,7 +7,7 @@ import { DContext } from './context/Datacontext';
 import LoadingPage from './components/pages/Loading';
 import Home from './components/pages/Home';
 import Header from './components/blocks/Header';
-import { ViewHistory } from './components/pages/ViewHistory';
+import { ViewHistory, ViewTimetable } from './components/pages/ViewHistory';
 import { AdminDashboard } from './components/pages/admin/AdminDashboard';
 import { Department } from './components/pages/admin/Department';
 import { Dashboard } from './components/pages/HOD/Dashboard';
@@ -66,7 +66,7 @@ function App() {
 
         <Route path="/login" element={isAuth ? <Home /> : <Login />} />
         {/* <Route path='/register' element={isAuth ? <Home /> : <Register />} /> */}
-        <Route path='/view-history' element={<ViewHistory />} />
+       
         <Route path='/admin/hod' element={<HodList />} />
         <Route path='/hodManage' element={<StaffRegister />} />
         <Route path='/test' element={<LoadingPage />} />
@@ -74,6 +74,8 @@ function App() {
         <Route path='/hod/staff' element={isAuth ? <StaffManage /> : <Login />} />
         <Route path='/hod/createstaff' element={isAuth ? <ClassStaffRegister /> : <Login />} />
         <Route path='/hod/timetable' element={isAuth ? <ManageTimeTable /> : <Login />} />
+        <Route path='/hod/timetable/:year' element={isAuth ? <ViewTimetable /> : <Login />} />
+
         <Route path='/hod/createTimeTable' element={isAuth ? <Timetable /> : <Login />} />
         <Route path='/alerts' element={isAuth ? <AbsentAlerts/> : <Login />} />
         
