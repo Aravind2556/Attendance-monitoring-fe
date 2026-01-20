@@ -48,7 +48,7 @@ const CreateStudent = () => {
             gender: gender.toLowerCase(),
             department: currentUser.department,
             year: selectedYear,
-            class: selectedClass
+            classes: selectedClass
         };
 
         fetch(`${BeURL}/register`, {

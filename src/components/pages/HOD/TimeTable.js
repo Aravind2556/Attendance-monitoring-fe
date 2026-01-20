@@ -242,6 +242,10 @@ const Timetable = () => {
                         </button>
                     </div>
 
+                   <div className='flex justify-end'>
+                        <button className='bg-primary-400 text-white font-semibold rounded-xl px-4 py-1' onClick={handleRegister}>Create Timetable</button>
+                   </div>
+
                 </div>
             </div>
         </section>

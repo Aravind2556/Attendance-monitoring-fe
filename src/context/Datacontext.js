@@ -141,7 +141,6 @@ const DataContext = ({ children }) => {
                         }
                     }, [BeURL,currentUser]);
 
-
     const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses, dropdownDepartments ,currentHod ,setCurrentHod}
 
     return (

@@ -24,6 +24,7 @@ import CreateStudent from './components/pages/ClassInchange.js/CreateStudent';
 import ClassStaffRegister from './components/pages/HOD/ClassStaffRegister';
 import { StaffManage } from './components/pages/HOD/StaffManage';
 import { ManageTimeTable } from './components/pages/HOD/ManageTimeTable';
+import { AbsentAlerts } from './components/pages/AbsentAlerts';
 
 
 function App() {
@@ -38,6 +39,9 @@ function App() {
     }
     else if (isAuth && currentUser?.role === "tutor") {
       return <TutorDashboard />
+    }
+    else if (isAuth && currentUser?.role === "student"){
+      return 
     }
     else{
       return <Login />
@@ -71,6 +75,7 @@ function App() {
         <Route path='/hod/createstaff' element={isAuth ? <ClassStaffRegister /> : <Login />} />
         <Route path='/hod/timetable' element={isAuth ? <ManageTimeTable /> : <Login />} />
         <Route path='/hod/createTimeTable' element={isAuth ? <Timetable /> : <Login />} />
+        <Route path='/alerts' element={isAuth ? <AbsentAlerts/> : <Login />} />
         
 
       </Routes>
