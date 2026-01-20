@@ -1,6 +1,6 @@
-export const fetchDepartment = async ({ BeURL }) => {
+export const fetchUsers = async ({ BeURL }) => {
     try {
-        const res = await fetch(`${BeURL}/fetchDepartment`, {
+        const res = await fetch(`${BeURL}/fetchusers`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -11,8 +11,7 @@ export const fetchDepartment = async ({ BeURL }) => {
         const data = await res.json();
         return data;
     } catch (error) {
-        console.log("Error in fetch department:", error);
-        return { success: false, message: "Unable to load department details" };
+        console.error("Error in fetch year:", error);
+        return { success: false, message: "Server error" };
     }
 };
-

@@ -4,6 +4,7 @@ import { fetchYear } from "../service/fetchYear";
 import { fetchClass } from "../service/fetchClass";
 import { fetchDropDwonDepartments } from "../service/fetchDropDwonDepartments";
 import { fetchCurrentHod } from "../service/fetchCurrentHod";
+import { fetchUsers } from "../service/fetchUsers";
 
 export const DContext = createContext()
 
@@ -17,6 +18,7 @@ const DataContext = ({ children }) => {
     const [classes,setClasses]=useState([])
     const [dropdownDepartments,setDropDownDepartments]=useState([])
     const [currentHod,setCurrentHod]=useState(null)
+    const [users, setUsers] = useState([])
 
 
     useEffect(() => {
@@ -123,7 +125,7 @@ const DataContext = ({ children }) => {
                         }
                     };
                     loadDepartments();
-                })
+                },[BeURL])
 
                     useEffect(() => {
                         if(currentUser?.role === "hod"){
@@ -141,7 +143,25 @@ const DataContext = ({ children }) => {
                         }
                     }, [BeURL,currentUser]);
 
-    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses, dropdownDepartments ,currentHod ,setCurrentHod}
+    useEffect(() => {
+        const loadUsers = async () => {
+            const data = await fetchUsers({ BeURL })
+
+            if (data.success) {
+                setUsers(data.users) 
+            } else {
+                alert(data.message)
+            }
+        }
+
+        if (BeURL) {
+            loadUsers()
+        }
+    }, [BeURL])
+
+
+
+    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, departments, setDepartments, years, setYears, classes, setClasses, dropdownDepartments, currentHod, setCurrentHod, users }
 
     return (
         <DContext.Provider value={data}>
