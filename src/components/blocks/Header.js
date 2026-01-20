@@ -39,7 +39,7 @@ const callsToAction = [
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const {isAuth, handleLogout} = useContext(DContext)
+  const { isAuth, handleLogout, currentUser } = useContext(DContext)
 
   return (
     <header className="bg-white">
@@ -70,15 +70,15 @@ export default function Example() {
           <a href="/" className="text-sm/6 font-semibold text-gray-900">
             Home
           </a>
-          <a href="/alerts" className="text-sm/6 font-semibold text-gray-900">
+          {['tutor', 'hod', 'staff'].includes(currentUser.role) && <a href="/alerts" className="text-sm/6 font-semibold text-gray-900">
             Alerts
-          </a>
+          </a>}
 
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {
-          isAuth?<button className='rounded-full px-4 py-1 text-md bg-secondary-500 hover:bg-secondary-600 text-white' onClick={handleLogout}>Logout</button>
-          :<button className='rounded-full px-4 py-1 text-md bg-secondary-500 hover:bg-secondary-600 text-white' onClick={()=>window.location.href="/login"} >Login</button>
+            isAuth ? <button className='rounded-full px-4 py-1 text-md bg-secondary-500 hover:bg-secondary-600 text-white' onClick={handleLogout}>Logout</button>
+              : <button className='rounded-full px-4 py-1 text-md bg-secondary-500 hover:bg-secondary-600 text-white' onClick={() => window.location.href = "/login"} >Login</button>
           }
         </div>
       </nav>

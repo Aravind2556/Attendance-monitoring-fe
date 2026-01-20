@@ -25,6 +25,7 @@ import ClassStaffRegister from './components/pages/HOD/ClassStaffRegister';
 import { StaffManage } from './components/pages/HOD/StaffManage';
 import { ManageTimeTable } from './components/pages/HOD/ManageTimeTable';
 import { AbsentAlerts } from './components/pages/AbsentAlerts';
+import { StudentDashboard } from './components/pages/StudentDashboard';
 
 
 function App() {
@@ -40,8 +41,8 @@ function App() {
     else if (isAuth && currentUser?.role === "tutor" || currentUser?.role === "staff") {
       return <TutorDashboard />
     }
-    else if (isAuth && currentUser?.role === "student"){
-      return
+    else if (isAuth && currentUser?.role === "student") {
+      return <StudentDashboard />
     }
     else {
       return <Login />
