@@ -219,15 +219,16 @@ const Timetable = () => {
                     <div className="flex justify-end gap-4 pt-4">
                         <button
                             type="button"
-                            // onClick={() => {
-                            //     setName("");
-                            //     setContact("");
-                            //     setEmail("");
-                            //     setPassword("");
-                            //     setConfirmPassword("");
-                            //     setDepartment("");
-                            //     setGender("Male");
-                            // }}
+                            onClick={() => {
+                                setDay("");
+                                setEndTime("");
+                                setStartTime("");
+                                setPeriodNo("");
+                                setStaff(" ");
+                                setSubject("");
+                                setYear(' ')
+                                // setGender("Male");
+                            }}
                             className="px-8 py-3 rounded-xl border font-semibold"
                         >
                             Cancel
@@ -242,9 +243,7 @@ const Timetable = () => {
                         </button>
                     </div>
 
-                   <div className='flex justify-end'>
-                        <button className='bg-primary-400 text-white font-semibold rounded-xl px-4 py-1' onClick={handleRegister}>Create Timetable</button>
-                   </div>
+                 
 
                 </div>
             </div>
