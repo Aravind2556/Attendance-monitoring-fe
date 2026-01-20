@@ -11,8 +11,8 @@ export const fetchDropDwonDepartments = async ({ BeURL }) => {
         const data = await res.json();
         return data;
     } catch (error) {
-        console.error("Error in fetch department:", error);
-        return { success: false, message: "Server error" };
+        console.log("Error in fetch department:", error);
+        return { success: false, message: "Unable to load drop down department details" };
     }
 };
 
