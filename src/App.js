@@ -34,16 +34,16 @@ function App() {
     if (isAuth && currentUser?.role === "admin") {
       return <AdminDashboard />
     }
-    else if (isAuth && currentUser?.role === "hod"){
+    else if (isAuth && currentUser?.role === "hod") {
       return <Dashboard />
     }
-    else if (isAuth && currentUser?.role === "tutor") {
+    else if (isAuth && currentUser?.role === "tutor" || currentUser?.role === "staff") {
       return <TutorDashboard />
     }
-    else if (isAuth && currentUser?.role === "student"){
-      return 
+    else if (isAuth && currentUser?.role === "student") {
+      return
     }
-    else{
+    else {
       return <Login />
     }
   }
@@ -66,7 +66,7 @@ function App() {
 
         <Route path="/login" element={isAuth ? <Home /> : <Login />} />
         {/* <Route path='/register' element={isAuth ? <Home /> : <Register />} /> */}
-       
+
         <Route path='/admin/hod' element={<HodList />} />
         <Route path='/hodManage' element={<StaffRegister />} />
         <Route path='/test' element={<LoadingPage />} />
@@ -77,8 +77,8 @@ function App() {
         <Route path='/hod/timetable/:year' element={isAuth ? <ViewTimetable /> : <Login />} />
 
         <Route path='/hod/createTimeTable' element={isAuth ? <Timetable /> : <Login />} />
-        <Route path='/alerts' element={isAuth ? <AbsentAlerts/> : <Login />} />
-        
+        <Route path='/alerts' element={isAuth ? <AbsentAlerts /> : <Login />} />
+
 
       </Routes>
       {/* <Footer/> */}

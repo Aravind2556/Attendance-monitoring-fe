@@ -5,7 +5,7 @@ import { fetchTimetable } from '../../../service/fetchTimetable';
 
 export const ManageTimeTable = () => {
     const navigate = useNavigate();
-    const { BeURL } = useContext(DContext);
+    const { BeURL, currentUser } = useContext(DContext);
 
     const [loading, setLoading] = useState(true);
     const [timetableCount, setTimetableCount] = useState(0);
@@ -32,36 +32,38 @@ export const ManageTimeTable = () => {
         <div className="min-h-screen bg-gray-100 p-6 space-y-8">
 
             {/* Header */}
-            <div>
-                <h1 className="text-3xl font-bold text-gray-800">
-                    Timetable Management
-                </h1>
-                <p className="text-gray-500">
-                    Create and manage class timetables
-                </p>
-            </div>
-
-            {/* Action Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                {/* Create Timetable */}
-                <div
-                    onClick={() => navigate('/hod/createTimeTable')}
-                    className="cursor-pointer rounded-2xl bg-white p-6 shadow-md
-          hover:shadow-xl transition border border-gray-200 hover:border-primary-500"
-                >
-                    <h2 className="text-xl font-semibold text-gray-800">
-                        Create Timetable
-                    </h2>
-                    <p className="mt-2 text-gray-500 text-sm">
-                        Add new timetable entries for classes
+            {currentUser.role === 'hod' && <>
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-800">
+                        Timetable Management
+                    </h1>
+                    <p className="text-gray-500">
+                        Create and manage class timetables
                     </p>
-                    <div className="mt-4 text-primary-600 font-semibold">
-                        Go →
-                    </div>
                 </div>
 
-            </div>
+                {/* Action Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    {/* Create Timetable */}
+                    <div
+                        onClick={() => navigate('/hod/createTimeTable')}
+                        className="cursor-pointer rounded-2xl bg-white p-6 shadow-md
+          hover:shadow-xl transition border border-gray-200 hover:border-primary-500"
+                    >
+                        <h2 className="text-xl font-semibold text-gray-800">
+                            Create Timetable
+                        </h2>
+                        <p className="mt-2 text-gray-500 text-sm">
+                            Add new timetable entries for classes
+                        </p>
+                        <div className="mt-4 text-primary-600 font-semibold">
+                            Go →
+                        </div>
+                    </div>
+
+                </div>
+            </>}
 
             {/* Year Selection */}
             <div>

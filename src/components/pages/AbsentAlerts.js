@@ -119,11 +119,11 @@ export const AbsentAlerts = () => {
                                             {getDepartmentName(alert.department)}
                                         </td>
 
-                                      
-                                            <td className="px-4 py-2">
-                                                {getClassLabel(alert)}
-                                            </td>
-                                  
+
+                                        <td className="px-4 py-2">
+                                            {getClassLabel(alert)}
+                                        </td>
+
 
                                         <td className="px-4 py-2">
                                             {getYearLabel(alert.year)}
