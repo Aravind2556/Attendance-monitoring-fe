@@ -103,11 +103,11 @@ export const StaffManage = () => {
                     <div className="bg-white rounded-lg shadow-lg p-6 w-96">
                         <h3 className="text-xl font-bold mb-4">Staff Details</h3>
                         <div className="space-y-2">
-                            <p><strong>Name:</strong> {selectedStaff[0].staff?.fullname || selectedStaff.name}</p>
-                            <p><strong>Email:</strong> {selectedStaff[0].staff?.email}</p>
-                            <p><strong>Role:</strong> {selectedStaff[0].staff?.role}</p>
-                            <p><strong>Department:</strong> {selectedStaff[0].department?.name}</p>
-                            <p><strong>Contact:</strong> {selectedStaff[0].staff?.contact}</p>
+                            <p><strong>Name:</strong> {selectedStaff[0]?.staff?.fullname || selectedStaff.name}</p>
+                            <p><strong>Email:</strong> {selectedStaff[0]?.staff?.email}</p>
+                            <p><strong>Role:</strong> {selectedStaff[0]?.staff?.role}</p>
+                            <p><strong>Department:</strong> {selectedStaff[0]?.department?.name}</p>
+                            <p><strong>Contact:</strong> {selectedStaff[0]?.staff?.contact}</p>
                         </div>
                         <div className="mt-4 flex justify-end">
                             <button

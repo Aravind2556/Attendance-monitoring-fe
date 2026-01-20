@@ -100,7 +100,7 @@ const Timetable = () => {
                             <label className="text-sm font-medium text-slate-700">Day</label>
                             <input
                                 value={day}
-                                onChange={e => setDay(e.target.value)}
+                                onChange={e => setDay(e.target.value.toLowerCase())}
                                 placeholder="Monday"
                                 className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm
                                              focus:border-primary-600 focus:ring-4 focus:ring-primary-200"
@@ -215,6 +215,31 @@ const Timetable = () => {
                                 ))}
                             </select>
                         </div>
+                    </div>
+                    <div className="flex justify-end gap-4 pt-4">
+                        <button
+                            type="button"
+                            // onClick={() => {
+                            //     setName("");
+                            //     setContact("");
+                            //     setEmail("");
+                            //     setPassword("");
+                            //     setConfirmPassword("");
+                            //     setDepartment("");
+                            //     setGender("Male");
+                            // }}
+                            className="px-8 py-3 rounded-xl border font-semibold"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleRegister}
+                            className="px-8 py-3 rounded-xl bg-primary-600 text-white font-semibold"
+                        >
+                            Create Account
+                        </button>
                     </div>
 
                 </div>

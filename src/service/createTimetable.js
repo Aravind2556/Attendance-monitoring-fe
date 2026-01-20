@@ -15,6 +15,6 @@ export const createTimetable = async ({ BeURL, tempTimetable }) => {
 
     } catch (error) {
         console.error("Error in createTimetable:", error);
-        return { success: false, message: "Server error" };
+        return { success: false, message: "Error in Create Timetable" };
     }
 };
