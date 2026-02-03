@@ -189,9 +189,9 @@ const CreateStudent = () => {
                 </div>
 
                 <div>
-                    <label className="font-medium">Parent Email</label>
+                    <label className="font-medium">Parent Number</label>
                     <input
-                        placeholder="Parent Email"
+                        placeholder="Parent Number"
                         value={parentEmail}
                         onChange={e => setParentEmail(e.target.value)}
                         className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
